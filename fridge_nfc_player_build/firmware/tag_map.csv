@@ -1,0 +1,5 @@
+uid_hex,sd_path,display_name
+REPLACE_WITH_UID_HEX_1,/music/001.wav,Track 1
+REPLACE_WITH_UID_HEX_2,/music/002.wav,Track 2
+REPLACE_WITH_UID_HEX_3,/music/003.wav,Track 3
+

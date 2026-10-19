@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      .bg { fill:#f5f7fb; }
+      .title { font:700 31px Arial,sans-serif; fill:#152238; }
+      .sub { font:16px Arial,sans-serif; fill:#4d5c73; }
+      .box { fill:white; stroke:#1f3856; stroke-width:2.2; rx:16; }
+      .boxhead { font:700 19px Arial,sans-serif; fill:#172b45; }
+      .txt { font:15px Arial,sans-serif; fill:#26384f; }
+      .small { font:13px Arial,sans-serif; fill:#45566d; }
+      .pin { font:700 13px Arial,sans-serif; fill:#1e2d42; }
+      .power { stroke:#d23c37; stroke-width:4; fill:none; }
+      .logic { stroke:#16845b; stroke-width:3; fill:none; }
+      .spi { stroke:#2674c5; stroke-width:3; fill:none; }
+      .i2s { stroke:#8b4db8; stroke-width:3; fill:none; }
+      .ground { stroke:#333f50; stroke-width:3; stroke-dasharray:7 6; fill:none; }
+      .ctrl { stroke:#cf8a1a; stroke-width:2.5; fill:none; }
+      .warn { fill:#fff3d7; stroke:#d89018; stroke-width:1.5; rx:10; }
+      .warntext { font:700 14px Arial,sans-serif; fill:#80510b; }
+      .legend { font:14px Arial,sans-serif; fill:#30435b; }
+      .dot { stroke:white; stroke-width:2; }
+    </style>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#16845b"/></marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2674c5"/></marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8b4db8"/></marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d23c37"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="900"/>
+  <text class="title" x="42" y="48">Fridge NFC Music Player — Ready-Made Module Wiring</text>
+  <text class="sub" x="43" y="76">Module prototype • ESP32-WROOM-32E • microSD over SPI • I²S DAC/amplifier</text>
+
+  <!-- Power bank -->
+  <rect class="box" x="44" y="112" width="320" height="145"/>
+  <text class="boxhead" x="68" y="145">5 V USB power bank</text>
+  <text class="txt" x="68" y="174">Regulated 5 V, ≥2 A</text>
+  <text class="txt" x="68" y="199">Prefer 2 output ports</text>
+  <text class="small" x="68" y="228">Port 1 → ESP32 Micro-USB</text>
+  <text class="small" x="68" y="247">Port 2 → 5 V branch: amp + 3.3 V regulator</text>
+
+  <!-- PN532 -->
+  <rect class="box" x="44" y="327" width="320" height="190"/>
+  <text class="boxhead" x="68" y="362">PN532 V3 NFC reader</text>
+  <text class="txt" x="68" y="392">I²C mode: Ch1 ON, Ch2 OFF</text>
+  <text class="txt" x="68" y="420">SDA → GPIO21</text>
+  <text class="txt" x="68" y="445">SCL → GPIO22</text>
+  <text class="txt" x="68" y="470">VCC → external 3V3 • GND → common GND</text>
+  <text class="small" x="68" y="495">IRQ → GPIO34 optional</text>
+
+  <!-- SD -->
+  <rect class="box" x="44" y="582" width="360" height="210"/>
+  <text class="boxhead" x="68" y="617">3.3 V SPI microSD breakout</text>
+  <text class="txt" x="68" y="648">CLK/SCK → GPIO18</text>
+  <text class="txt" x="68" y="674">DI/SI/MOSI → GPIO23</text>
+  <text class="txt" x="68" y="700">DO/SO/MISO → GPIO19</text>
+  <text class="txt" x="68" y="726">CS/SS → GPIO13</text>
+  <text class="txt" x="68" y="752">3V → external 3V3 • GND → common GND</text>
+  <text class="small" x="68" y="777">Use a 3V-only module; never feed it 5 V</text>
+
+  <!-- ESP32 -->
+  <rect class="box" x="485" y="302" width="390" height="300"/>
+  <text class="boxhead" x="512" y="339">ESP32-WROOM-32E DevKitC</text>
+  <text class="txt" x="512" y="374">Reads tag UID → chooses track file</text>
+  <text class="txt" x="512" y="410">SPI SD: 18 / 19 / 23 / 13</text>
+  <text class="txt" x="512" y="438">I²C PN532: SDA 21 / SCL 22</text>
+  <text class="txt" x="512" y="466">I²S out: BCLK 26 / LRC 25 / DIN 27</text>
+  <text class="txt" x="512" y="494">Buttons: GPIO32 / 33 / 14 to GND</text>
+  <text class="txt" x="512" y="532">Separate 3V3 regulator powers PN532 + SD</text>
+  <text class="txt" x="512" y="560">All grounds are common</text>
+  <text class="small" x="512" y="584">Power DevKitC by Micro-USB only</text>
+
+  <!-- Amp -->
+  <rect class="box" x="1020" y="305" width="320" height="250"/>
+  <text class="boxhead" x="1046" y="342">MAX98357A mono I²S amp</text>
+  <text class="txt" x="1046" y="375">BCLK ← GPIO26</text>
+  <text class="txt" x="1046" y="402">LRC/WS ← GPIO25</text>
+  <text class="txt" x="1046" y="429">DIN ← GPIO27</text>
+  <text class="txt" x="1046" y="456">VIN ← 5 V branch from USB2</text>
+  <text class="txt" x="1046" y="483">GND ↔ ESP32 GND</text>
+  <text class="small" x="1046" y="520">Built-in DAC + Class-D amp</text>
+  <text class="small" x="1046" y="541">Keep GAIN default; mono mix breakout</text>
+
+  <!-- Speaker -->
+  <rect class="box" x="1070" y="650" width="250" height="135"/>
+  <text class="boxhead" x="1095" y="685">4 Ω speaker</text>
+  <text class="txt" x="1095" y="716">OUT+ → speaker +</text>
+  <text class="txt" x="1095" y="742">OUT− → speaker −</text>
+  <text class="small" x="1095" y="768">Never connect either to GND</text>
+
+  <!-- Buttons -->
+  <rect class="box" x="515" y="685" width="370" height="108"/>
+  <text class="boxhead" x="540" y="720">3 momentary buttons</text>
+  <text class="txt" x="540" y="750">GPIO32 Play • GPIO33 Next • GPIO14 Previous</text>
+  <text class="small" x="540" y="777">Other side of every switch → GND</text>
+
+  <!-- Connections: bank -->
+  <path class="power" marker-end="url(#arrowRed)" d="M364 165 H425 V285 H530 V302"/>
+  <text class="small" x="382" y="151" fill="#a52f2a">5 V USB1 to DevKit Micro-USB</text>
+  <path class="power" marker-end="url(#arrowRed)" d="M364 220 H395 V173 H430"/>
+  <text class="small" x="368" y="205" fill="#a52f2a">USB2 5 V</text>
+  <path class="power" marker-end="url(#arrowRed)" d="M364 220 H390 V275 H980 V460 H1020"/>
+  <text class="small" x="790" y="270" fill="#a52f2a">5 V branch → amp VIN</text>
+
+  <!-- Data connections -->
+  <path class="logic" marker-end="url(#arrowGreen)" d="M364 409 H430 V398 H485"/>
+  <path class="logic" marker-end="url(#arrowGreen)" d="M364 437 H443 V424 H485"/>
+  <text class="small" x="376" y="390" fill="#116b49">I²C: 21 / 22</text>
+  <path class="spi" marker-end="url(#arrowBlue)" d="M404 650 H447 V508 H485"/>
+  <path class="spi" marker-end="url(#arrowBlue)" d="M404 688 H457 V517 H485"/>
+  <path class="spi" marker-end="url(#arrowBlue)" d="M404 720 H467 V526 H485"/>
+  <text class="small" x="408" y="633" fill="#1d5e9f">SPI: 18 / 19 / 23 / 13</text>
+  <path class="i2s" marker-end="url(#arrowPurple)" d="M875 407 H960 V376 H1020"/>
+  <path class="i2s" marker-end="url(#arrowPurple)" d="M875 435 H976 V403 H1020"/>
+  <path class="i2s" marker-end="url(#arrowPurple)" d="M875 463 H992 V430 H1020"/>
+  <text class="small" x="890" y="353" fill="#70408f">I²S: 26 / 25 / 27</text>
+
+  <!-- ground and speaker -->
+  <path class="ground" d="M875 550 H940 V505 H1020"/>
+  <text class="small" x="892" y="575">Common GND</text>
+  <path class="i2s" marker-end="url(#arrowPurple)" d="M1180 555 V650"/>
+  <text class="small" x="1192" y="610" fill="#70408f">OUT+ / OUT−</text>
+  <path class="ctrl" d="M700 685 V635 H800 V602"/>
+  <text class="small" x="711" y="658" fill="#99630e">GPIO buttons</text>
+
+  <!-- corrected peripheral regulator and warnings -->
+  <rect class="box" x="430" y="112" width="330" height="145"/>
+  <text class="boxhead" x="451" y="143">3.3 V peripheral regulator</text>
+  <text class="txt" x="451" y="173">VIN ← USB2 5 V branch</text>
+  <text class="txt" x="451" y="198">3V3 OUT → PN532 + microSD</text>
+  <text class="small" x="451" y="227">≥500 mA • all grounds common</text>
+
+  <rect class="warn" x="780" y="112" width="560" height="145"/>
+  <text class="warntext" x="805" y="143">Important</text>
+  <text class="txt" x="805" y="173">Power the DevKitC through Micro-USB only; never also feed its 5V pin.</text>
+  <text class="txt" x="805" y="198">No 5 V on ESP32 GPIO/3V3 or the 3.3 V-only microSD breakout.</text>
+  <text class="txt" x="805" y="223">Use one power bank; join grounds; speaker goes only across OUT+ / OUT−.</text>
+  <text class="small" x="805" y="246">Avoid GPIO16/17 (PSRAM variant risk); leave PN532 IRQ/reset unconnected initially.</text>
+
+  <line x1="45" y1="842" x2="90" y2="842" class="power"/><text class="legend" x="100" y="847">5 V power</text>
+  <line x1="235" y1="842" x2="280" y2="842" class="logic"/><text class="legend" x="290" y="847">I²C/NFC</text>
+  <line x1="420" y1="842" x2="465" y2="842" class="spi"/><text class="legend" x="475" y="847">SPI/SD</text>
+  <line x1="580" y1="842" x2="625" y2="842" class="i2s"/><text class="legend" x="635" y="847">I²S/audio</text>
+  <line x1="755" y1="842" x2="800" y2="842" class="ground"/><text class="legend" x="810" y="847">common GND</text>
+  <text class="small" x="45" y="878">Detailed pin table, library choice, sound setup, and assembly steps are in fridge_nfc_player_module_wiring.md</text>
+</svg>
